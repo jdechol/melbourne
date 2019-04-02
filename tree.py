@@ -3,18 +3,17 @@ from sklearn.metrics import mean_absolute_error
 from setup import Setup
 
 
-def get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y):
+def mean_error(max_leaf_nodes, train_X, val_X, train_y, val_y):
     model = tree(max_leaf_nodes=max_leaf_nodes, random_state=0)
     model.fit(train_X, train_y)
-    preds_val = model.predict(val_X)
-    mae = mean_absolute_error(val_y, preds_val)
-    return(mae)
+    prediction = model.predict(val_X)
+    return mean_absolute_error(val_y, prediction)
 
 
 def generate_average_errors(nodes):
     results = {}
     for max_leaf_nodes in nodes:
-        results[max_leaf_nodes] = get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y)
+        results[max_leaf_nodes] = mean_error(max_leaf_nodes, train_X, val_X, train_y, val_y)
 
     return results
 
